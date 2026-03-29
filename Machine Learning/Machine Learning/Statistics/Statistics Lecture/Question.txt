@@ -1,0 +1,18 @@
+Dear students:
+
+Prepare the answer of the following questions and submit it 
+
+1. What is Hypothesis? Why do we need to draw hypothesis?
+2. What do you mean by null hypothesis? When do we reject our null guess (null
+hypothesis).
+3. what is your understanding on “T-test for single mean”?
+4. When do we use paired Sample t-test?
+
+1. What are the differences between correlation and regression?
+2. What is correlation coefficient?
+3. age: 12,23,14,20,23,25,18,28,30,34
+    wt: 67,89,45,78,56,34,34,55,66,77
+a) calculate correlation and explain
+b) construct a regression line    wt = a +b*age
+c) using line: if a persons age is 38 what is the predicted weight(wt) of that person.
+4. When do we use rank correlation?

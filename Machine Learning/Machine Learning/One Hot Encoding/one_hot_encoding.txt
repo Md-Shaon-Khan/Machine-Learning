@@ -1,0 +1,21 @@
+import pandas as pd
+
+# Create DataFrame
+data = {'Category': ['A', 'B', 'C', 'A', 'B', 'C', 'A', 'B', 'C']}
+df = pd.DataFrame(data)
+print(df.head())
+
+# One-hot encoding without prefix
+one_hot_encoded_df = pd.get_dummies(df, columns=['Category'])
+print(one_hot_encoded_df)
+
+# One-hot encoding with prefix "Dummy"
+one_hot_encoded_df = pd.get_dummies(df, columns=['Category'], prefix='Dummy')
+print(one_hot_encoded_df)
+
+# One-hot encoding with prefix and drop_first=True
+one_hot_encoded_df = pd.get_dummies(df, columns=['Category'], prefix='Dummy', drop_first=True)
+print(one_hot_encoded_df)
+
+# Original DataFrame
+print(df.head())

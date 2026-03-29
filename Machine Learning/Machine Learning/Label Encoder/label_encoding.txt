@@ -1,0 +1,42 @@
+# Manual Label Encoding
+
+classes = ['ClassA', 'ClassB', 'ClassC', 'ClassD']
+instances = ['ClassA', 'ClassB', 'ClassC', 'ClassD', 'ClassA', 'ClassB', 'ClassC', 'ClassD', 'ClassA', 'ClassB']
+
+# Label to integer mapping
+label_to_int = {label: index for index, label in enumerate(classes)}
+encoded_labels = [label_to_int[label] for label in instances]
+
+print("Encoded labels (manual):", encoded_labels)
+
+# Integer back to label mapping
+int_to_label = {index: label for label, index in label_to_int.items()}
+decoded_labels = [int_to_label[index] for index in encoded_labels]
+
+print("Decoded labels (manual):", decoded_labels)
+
+
+# Sklearn Label Encoder
+
+from sklearn.preprocessing import LabelEncoder
+
+label_encoder = LabelEncoder()
+
+# Encode labels
+encoded_labels_sklearn = label_encoder.fit_transform(instances)
+print("Encoded labels (sklearn):", encoded_labels_sklearn)
+
+# Decode labels
+original_labels = label_encoder.inverse_transform(encoded_labels_sklearn)
+print("Original labels (sklearn):", original_labels)
+
+
+
+
+
+
+Output:
+Encoded labels (manual): [0, 1, 2, 3, 0, 1, 2, 3, 0, 1]
+Decoded labels (manual): ['ClassA', 'ClassB', 'ClassC', 'ClassD', 'ClassA', 'ClassB', 'ClassC', 'ClassD', 'ClassA', 'ClassB']
+Encoded labels (sklearn): [0 1 2 3 0 1 2 3 0 1]
+Original labels (sklearn): ['ClassA' 'ClassB' 'ClassC' 'ClassD' 'ClassA' 'ClassB' 'ClassC' 'ClassD' 'ClassA' 'ClassB']

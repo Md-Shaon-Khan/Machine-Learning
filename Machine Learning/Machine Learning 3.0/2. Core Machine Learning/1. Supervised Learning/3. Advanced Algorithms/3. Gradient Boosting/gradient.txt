@@ -1,0 +1,55 @@
+# 1️⃣ Libraries import
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split, cross_val_score, learning_curve
+from sklearn.metrics import f1_score
+
+# 2️⃣ Load dataset
+df = pd.read_csv("../input/ionosphere-data/ionosphere.csv")
+df.dropna(inplace=True)
+
+# Convert target to numbers (g -> 1, b -> 0)
+df["class"] = df["class"].map({"g":1, "b":0})
+
+# Separate features and target
+X = df.drop("class", axis=1)
+y = df["class"]
+
+# 3️⃣ Split data into train and test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# 4️⃣ Build Gradient Boosting model
+gbm = GradientBoostingClassifier(random_state=17)
+gbm.fit(X_train, y_train)
+
+# 5️⃣ Predict and check F1 score
+y_pred = gbm.predict(X_test)
+print("F1 score on test data:", f1_score(y_test, y_pred))
+
+# 6️⃣ Cross-validation F1 score
+cv_f1 = cross_val_score(gbm, X, y, cv=5, scoring="f1")
+print("Average CV F1 score:", cv_f1.mean())
+
+# 7️⃣ Plot learning curve
+train_sizes, train_scores, test_scores = learning_curve(
+    gbm, X, y, cv=5, scoring="f1", train_sizes=np.linspace(0.1, 1.0, 10))
+
+plt.plot(train_sizes, np.mean(train_scores, axis=1), label="Training score")
+plt.plot(train_sizes, np.mean(test_scores, axis=1), label="Validation score")
+plt.xlabel("Training size")
+plt.ylabel("F1 score")
+plt.title("Learning Curve")
+plt.legend()
+plt.show()
+
+# 8️⃣ Feature importance plot
+importance = pd.DataFrame({"Feature": X.columns, "Importance": gbm.feature_importances_})
+importance = importance.sort_values(by="Importance", ascending=False)
+
+plt.figure(figsize=(8,6))
+sns.barplot(x="Importance", y="Feature", data=importance)
+plt.title("Feature Importance")
+plt.show()
